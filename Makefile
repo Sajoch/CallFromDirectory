@@ -7,7 +7,7 @@ INSTALL_PATH_NEW:=$(subst \,\\\\,$(INSTALL_PATH))
 EXE_PATH_NEW:=$(subst \,\\\\,$(EXE_PATH))
 ICON_PATH_NEW:=$(subst \,\\\\,$(ICON_PATH))
 ifneq (,$(ICON_PATH))
-	ICON="ICON=\""$(ICON_PATH_NEW)"\""
+	ICON="\"ICON\"=\""$(ICON_PATH_NEW)"\""
 endif
 
 install.reg:
@@ -15,9 +15,10 @@ install.reg:
 	@echo >> $@
 	@echo "[HKEY_CURRENT_USER\\Software\\Classes\\directory\\Background\\shell\\"$(SERVICE)"]" >> $@
 	@echo "@=\""$(SERVICE)"\"" >> $@
-	@echo $(ICON) >> $@
+	@echo $(ICON)"" >> $@
 	@echo "[HKEY_CURRENT_USER\\Software\\Classes\\directory\\Background\\shell\\"$(SERVICE)"\\command]" >> $@
 	@echo "@=\""$(INSTALL_PATH_NEW)" \\\""$(EXE_PATH_NEW)"\\\" \\\"%v\\\"\"" >> $@
+	@echo >> $@
 
 all: install.reg callfromdirectory.exe
 
